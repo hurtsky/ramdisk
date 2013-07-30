@@ -68,6 +68,19 @@ if [ -f /sys/module/lowmemorykiller/parameters/donotkill_sysproc ]; then
 	echo "android.process.acore,com.android.phone," > /sys/module/lowmemorykiller/parameters/donotkill_sysproc_names
 fi
 
+# Touchscreen
+# Configure touchscreen sensitivity
+# More-Sensitive
+# Taken from Project Lard - http://forum.xda-developers.com/showthread.php?p=41073252
+
+if [ -f /sys/class/touch/switch/set_touchscreen ]; then
+	echo 7025 > /sys/class/touch/switch/set_touchscreen;
+	echo 8002 > /sys/class/touch/switch/set_touchscreen;
+	echo 11001 > /sys/class/touch/switch/set_touchscreen;
+	echo 13030 > /sys/class/touch/switch/set_touchscreen;
+	echo 14005 > /sys/class/touch/switch/set_touchscreen;
+fi
+
 # Mount system read-only
 echo "Mount system read-only"
 mount -o ro,remount /system
