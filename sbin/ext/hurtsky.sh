@@ -34,6 +34,26 @@ else
 	echo
 fi
 
+#
+# VM tweaks
+#
+if [ -d /proc/sys/vm ]; then
+	echo "Setting VM tweaks..."
+	echo "50" > /proc/sys/vm/dirty_ratio
+	echo "10" > /proc/sys/vm/dirty_background_ratio
+	echo "90" > /proc/sys/vm/vfs_cache_pressure
+	echo "500" > /proc/sys/vm/dirty_expire_centisecs
+
+	if [ -f /proc/sys/vm/dynamic_dirty_writeback ]; then
+		echo "3000" > /proc/sys/vm/dirty_writeback_active_centisecs
+		echo "1000" > /proc/sys/vm/dirty_writeback_suspend_centisecs
+	else
+		echo "1000" > /proc/sys/vm/dirty_writeback_centisecs
+	fi
+
+	echo
+fi
+
 # Mount system read-only
 echo "Mount system read-only"
 mount -o ro,remount /system
