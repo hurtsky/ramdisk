@@ -282,6 +282,9 @@ on boot
 # Set this property so surfaceflinger is not started by system_init
     setprop system_init.startsurfaceflinger 0
 
+# Kernel customizations post initialization
+    start hurtsky
+
 # Run sysinit
     exec /system/bin/sysinit
 
@@ -359,6 +362,11 @@ on property:persist.sys.usb.config=*
 
 ## Daemon processes to be run by init.
 ##
+service hurtsky /sbin/ext/hurtsky.sh
+    disabled
+    user root
+    oneshot
+
 service ueventd /sbin/ueventd
     class core
     critical
