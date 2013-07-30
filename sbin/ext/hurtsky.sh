@@ -54,6 +54,20 @@ if [ -d /proc/sys/vm ]; then
 	echo
 fi
 
+#
+# Processes to be preserved from killing
+#
+if [ -f /sys/module/lowmemorykiller/parameters/donotkill_proc ]; then
+	echo "Setting user processes to be preserved from killing..."
+	echo 1 > /sys/module/lowmemorykiller/parameters/donotkill_proc
+	echo "com.cyanogenmod.trebuchet,android.inputmethod.latin," > /sys/module/lowmemorykiller/parameters/donotkill_proc_names
+fi
+if [ -f /sys/module/lowmemorykiller/parameters/donotkill_sysproc ]; then
+	echo "Setting system processes to be preserved from killing..."
+	echo 1 > /sys/module/lowmemorykiller/parameters/donotkill_sysproc
+	echo "android.process.acore,com.android.phone," > /sys/module/lowmemorykiller/parameters/donotkill_sysproc_names
+fi
+
 # Mount system read-only
 echo "Mount system read-only"
 mount -o ro,remount /system
